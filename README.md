@@ -25,6 +25,9 @@ Put the following step in your workflow
     TARGET_DIR: games/GTA5
 ```
 
+The following concrete example shows how this action uploads files to the remote
+storage.
+
 ```bash
 # SOURCE_DIR: ls
 - build/WebGL/index.html
