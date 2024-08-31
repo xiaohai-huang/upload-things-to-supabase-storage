@@ -24,7 +24,7 @@ export async function run(): Promise<void> {
       'message',
       `Successfully uploaded the directory: ${sourceDir} to your supabase storage.`
     )
-  } catch (error: any) {
+  } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
@@ -33,16 +33,16 @@ export async function run(): Promise<void> {
 async function uploadFileToSupabase(
   supabase: SupabaseClient,
   bucket: string,
-  path: string,
+  targetPath: string,
   fileContent: Buffer
-) {
+): Promise<void> {
   const { error } = await supabase.storage
     .from(bucket)
-    .upload(path, fileContent, { cacheControl: '3600', upsert: true })
+    .upload(targetPath, fileContent, { cacheControl: '3600', upsert: true })
   if (error) {
-    throw new Error(`Failed to upload ${path}: ${error.message}`)
+    throw new Error(`Failed to upload ${targetPath}: ${error.message}`)
   } else {
-    core.debug(`Successfully uploaded ${path}`)
+    core.debug(`Successfully uploaded ${targetPath}`)
   }
 }
 
@@ -51,7 +51,7 @@ async function uploadDirectory(
   directoryPath: string,
   bucket: string,
   supabasePath: string
-) {
+): Promise<void> {
   const files = await getFiles(directoryPath)
   const uploadPromises = files.map(async filePath => {
     const content = await readFile(filePath)
