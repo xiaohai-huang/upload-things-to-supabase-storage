@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import path from 'path'
-import { readFile } from 'fs/promises'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-import { getFiles, removeDirectoryPath } from './utils'
+import { getFiles, getMimeType, removeDirectoryPath } from './utils'
+import { readFile } from 'fs/promises'
 
 /**
  * The main function for the action.
@@ -33,16 +33,23 @@ export async function run(): Promise<void> {
 async function uploadFileToSupabase(
   supabase: SupabaseClient,
   bucket: string,
-  targetPath: string,
-  fileContent: Buffer
+  filePath: string,
+  targetPath: string
 ): Promise<void> {
+  const file = await readFile(filePath)
+  const contentType = await getMimeType(filePath)
   const { error } = await supabase.storage
     .from(bucket)
-    .upload(targetPath, fileContent, { cacheControl: '3600', upsert: true })
+    .upload(targetPath, file, {
+      cacheControl: '3600',
+      upsert: true,
+      contentType
+    })
+
   if (error) {
     throw new Error(`Failed to upload ${targetPath}: ${error.message}`)
   } else {
-    core.debug(`Successfully uploaded ${targetPath}`)
+    console.log(`Successfully uploaded ${targetPath}`)
   }
 }
 
@@ -54,13 +61,12 @@ async function uploadDirectory(
 ): Promise<void> {
   const files = await getFiles(directoryPath)
   const uploadPromises = files.map(async filePath => {
-    const content = await readFile(filePath)
-
     const remotePath = path.join(
       supabasePath,
       removeDirectoryPath(filePath, directoryPath)
     )
-    await uploadFileToSupabase(supabase, bucket, remotePath, content)
+
+    await uploadFileToSupabase(supabase, bucket, filePath, remotePath)
   })
 
   await Promise.all(uploadPromises)
