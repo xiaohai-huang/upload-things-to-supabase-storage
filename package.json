@@ -1,16 +1,16 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "v0.0.1",
-  "author": "",
+  "name": "upload-things-to-supabase-storage-action",
+  "description": "Upload a folder to Supabase storage bucket.",
+  "version": "v0.0.2",
+  "author": "xiaohai-huang",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/xiaohai-huang/upload-things-to-supabase-storage",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/xiaohai-huang/upload-things-to-supabase-storage.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/xiaohai-huang/upload-things-to-supabase-storage/issues"
   },
   "keywords": [
     "actions",
