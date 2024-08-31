@@ -1,23 +1,30 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Upload Things to Supabase Storage'
+description:
+  'Upload your stuff to supabase storage. It supports self hosted supabase.'
+author: 'xiaohai-huang'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
+  icon: 'upload-cloud'
   color: 'red'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  SUPABASE_PUBLIC_URL:
+    description: 'Supabase Public URL.'
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  SUPABASE_KEY:
+    description: 'Supabase service role key.'
+    required: true
+  BUCKET:
+    description: 'The bucket id to operate on.'
+    required: true
+  SOURCE_DIR:
+    description: 'Source directory.'
+    required: true
+  TARGET_DIR:
+    description: 'The directory on bukect.'
+    required: true
 
 runs:
   using: node20
