@@ -37,7 +37,7 @@ async function uploadFileToSupabase(
   targetPath: string
 ): Promise<void> {
   const file = await readFile(filePath)
-  const contentType = await getMimeType(filePath)
+  const contentType = getMimeType(filePath)
   const { error } = await supabase.storage
     .from(bucket)
     .upload(targetPath, file, {

@@ -2,7 +2,7 @@
  * Unit tests for src/utils.ts
  */
 import path from 'path'
-import { getFiles, getMimeType, removeDirectoryPath } from '../src/utils'
+import { getFiles, removeDirectoryPath, getMimeType } from '../src/utils'
 import { expect } from '@jest/globals'
 
 describe('utils.ts', () => {
@@ -61,10 +61,11 @@ describe('utils.ts', () => {
   })
 
   it('mime types of .github', async () => {
-    expect(await getMimeType('.github/dependabot.yml')).toEqual('text/plain')
-    expect(await getMimeType('.github/linters/tsconfig.json')).toEqual(
+    expect(getMimeType('.github/dependabot.yml')).toEqual('text/yaml')
+    expect(getMimeType('.github/linters/tsconfig.json')).toEqual(
       'application/json'
     )
-    expect(await getMimeType('badges/coverage.svg')).toEqual('image/svg+xml')
+    expect(getMimeType('badges/coverage.svg')).toEqual('image/svg+xml')
+    expect(getMimeType('hello.css')).toEqual('text/css')
   })
 })

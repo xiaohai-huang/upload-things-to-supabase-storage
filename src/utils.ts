@@ -1,7 +1,7 @@
-import { exec } from 'child_process'
 import { readdir } from 'fs/promises'
-import { promisify } from 'util'
 import path from 'path'
+// @ts-expect-error This package does not have ts definitions
+import { getMIMEType } from 'node-mime-types'
 
 export async function getFiles(directoryPath: string): Promise<string[]> {
   const files: string[] = []
@@ -30,13 +30,6 @@ export function removeDirectoryPath(
   return fullPath
 }
 
-const execPromise = promisify(exec)
-
-export async function getMimeType(filePath: string) {
-  const { stdout: mimetype, stderr } = await execPromise(
-    `file --brief --mime-type ${filePath}`
-  )
-  if (stderr)
-    throw new Error(`Unable to get the mine type of ${filePath}. ${stderr}`)
-  return mimetype.trimEnd()
+export function getMimeType(filePath: string): string {
+  return getMIMEType(filePath)
 }
