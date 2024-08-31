@@ -1,4 +1,4 @@
-# Create a GitHub Action Using TypeScript
+# Supabase Upload Github Action
 
 [![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
@@ -6,30 +6,38 @@
 [![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
+Upload files to Supabase Storage.
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
+It uses supabase javascript client to upload files.
 
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
+## Usage
 
-## Create Your Own Action
+Put the following step in your workflow
 
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
+```yaml
+- name: Upload to Supabase Storage
+  uses: xiaohai-huang/upload-things-to-supabase-storage
+  with:
+    SUPABASE_PUBLIC_URL: ${{ secrets.SUPABASE_PUBLIC_URL }}
+    SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+    BUCKET: websites
+    SOURCE_DIR: build/WebGL
+    TARGET_DIR: games/GTA5
+```
 
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
+```bash
+# SOURCE_DIR: ls
+- build/WebGL/index.html
+- build/WebGL/logo.png
+- build/WebGL/Build/data.br
+- build/WebGL/Build/code.wsam.br
 
-> [!IMPORTANT]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+# TARGET_DIR: ls
+- games/GTA5/index.html
+- games/GTA5/logo.png
+- games/GTA5/Build/data.br
+- games/GTA5/Build/code.wsam.br
+```
 
 ## Initial Setup
 

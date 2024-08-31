@@ -6,7 +6,7 @@ author: 'xiaohai-huang'
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: 'upload-cloud'
-  color: 'red'
+  color: 'green'
 
 # Define your inputs here.
 inputs:
