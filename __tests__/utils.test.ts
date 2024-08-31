@@ -1,7 +1,8 @@
 /**
  * Unit tests for src/utils.ts
  */
-import { getFiles } from '../src/utils'
+import path from 'path'
+import { getFiles, removeDirectoryPath } from '../src/utils'
 import { expect } from '@jest/globals'
 
 describe('utils.ts', () => {
@@ -19,5 +20,43 @@ describe('utils.ts', () => {
       '.github/workflows/codeql-analysis.yml',
       '.github/workflows/linter.yml'
     ])
+  })
+
+  it('remove directory path', () => {
+    expect(removeDirectoryPath('.github/dependabot.yml', '.github')).toEqual(
+      '/dependabot.yml'
+    )
+
+    expect(
+      removeDirectoryPath('build/WebGL/index.html', 'build/WebGL')
+    ).toEqual('/index.html')
+
+    expect(
+      removeDirectoryPath('build/WebGL/Build/data.br', 'build/WebGL')
+    ).toEqual('/Build/data.br')
+  })
+
+  it('generate remote path for index.html', () => {
+    const localDir = 'build/WebGL'
+    const filePath = 'build/WebGL/index.html'
+    const supabasePath = 'games/GTA5'
+    const remotePath = path.join(
+      supabasePath,
+      removeDirectoryPath(filePath, localDir)
+    )
+
+    expect(remotePath).toEqual('games/GTA5/index.html')
+  })
+
+  it('generate remote path for Build/data.br', () => {
+    const localDir = 'build/WebGL'
+    const filePath = 'build/WebGL/Build/data.br'
+    const supabasePath = 'games/GTA5'
+    const remotePath = path.join(
+      supabasePath,
+      removeDirectoryPath(filePath, localDir)
+    )
+
+    expect(remotePath).toEqual('games/GTA5/Build/data.br')
   })
 })

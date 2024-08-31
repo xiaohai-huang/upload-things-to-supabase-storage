@@ -3,7 +3,7 @@ import path from 'path'
 import { readFile } from 'fs/promises'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-import { getFiles } from './utils'
+import { getFiles, removeDirectoryPath } from './utils'
 
 /**
  * The main function for the action.
@@ -55,10 +55,11 @@ async function uploadDirectory(
   const files = await getFiles(directoryPath)
   const uploadPromises = files.map(async filePath => {
     const content = await readFile(filePath)
-    // remove the local folder name
-    const parts = filePath.split(path.sep)
-    parts.shift()
-    const remotePath = path.join(supabasePath, ...parts)
+
+    const remotePath = path.join(
+      supabasePath,
+      removeDirectoryPath(filePath, directoryPath)
+    )
     await uploadFileToSupabase(supabase, bucket, remotePath, content)
   })
 

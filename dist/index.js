@@ -41962,10 +41962,7 @@ async function uploadDirectory(supabase, directoryPath, bucket, supabasePath) {
     const files = await (0, utils_1.getFiles)(directoryPath);
     const uploadPromises = files.map(async (filePath) => {
         const content = await (0, promises_1.readFile)(filePath);
-        // remove the local folder name
-        const parts = filePath.split(path_1.default.sep);
-        parts.shift();
-        const remotePath = path_1.default.join(supabasePath, ...parts);
+        const remotePath = path_1.default.join(supabasePath, (0, utils_1.removeDirectoryPath)(filePath, directoryPath));
         await uploadFileToSupabase(supabase, bucket, remotePath, content);
     });
     await Promise.all(uploadPromises);
@@ -41984,6 +41981,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getFiles = getFiles;
+exports.removeDirectoryPath = removeDirectoryPath;
 const promises_1 = __nccwpck_require__(3292);
 const path_1 = __importDefault(__nccwpck_require__(1017));
 async function getFiles(directoryPath) {
@@ -41999,6 +41997,14 @@ async function getFiles(directoryPath) {
         }
     }
     return files.sort();
+}
+function removeDirectoryPath(fullPath, directoryPath) {
+    // Check if the fullPath starts with the directoryPath
+    if (fullPath.startsWith(directoryPath)) {
+        // Remove the directoryPath from the fullPath
+        return fullPath.slice(directoryPath.length);
+    }
+    return fullPath;
 }
 
 

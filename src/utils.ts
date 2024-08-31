@@ -15,3 +15,15 @@ export async function getFiles(directoryPath: string): Promise<string[]> {
 
   return files.sort()
 }
+
+export function removeDirectoryPath(
+  fullPath: string,
+  directoryPath: string
+): string {
+  // Check if the fullPath starts with the directoryPath
+  if (fullPath.startsWith(directoryPath)) {
+    // Remove the directoryPath from the fullPath
+    return fullPath.slice(directoryPath.length)
+  }
+  return fullPath
+}
