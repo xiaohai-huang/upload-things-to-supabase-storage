@@ -2,7 +2,7 @@
  * Unit tests for src/utils.ts
  */
 import path from 'path'
-import { getFiles, removeDirectoryPath } from '../src/utils'
+import { getFiles, getMimeType, removeDirectoryPath } from '../src/utils'
 import { expect } from '@jest/globals'
 
 describe('utils.ts', () => {
@@ -58,5 +58,13 @@ describe('utils.ts', () => {
     )
 
     expect(remotePath).toEqual('games/GTA5/Build/data.br')
+  })
+
+  it('mime types of .github', async () => {
+    expect(await getMimeType('.github/dependabot.yml')).toEqual('text/plain')
+    expect(await getMimeType('.github/linters/tsconfig.json')).toEqual(
+      'application/json'
+    )
+    expect(await getMimeType('badges/coverage.svg')).toEqual('image/svg+xml')
   })
 })
