@@ -8,7 +8,7 @@
 
 Upload files to Supabase Storage.
 
-It uses supabase javascript client to upload files.
+It uses `tus-js-client` to upload files.
 
 ## Usage
 
