@@ -1,7 +1,7 @@
 {
   "name": "upload-things-to-supabase-storage-action",
   "description": "Upload a folder to Supabase storage bucket.",
-  "version": "v0.0.5",
+  "version": "v0.0.6",
   "author": "xiaohai-huang",
   "private": true,
   "homepage": "https://github.com/xiaohai-huang/upload-things-to-supabase-storage",
