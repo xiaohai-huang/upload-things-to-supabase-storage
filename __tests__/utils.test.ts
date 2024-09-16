@@ -10,7 +10,6 @@ describe('utils.ts', () => {
     const dir = '.github'
     const files = await getFiles(dir)
     expect(files).toEqual([
-      '.github/dependabot.yml',
       '.github/linters/.eslintrc.yml',
       '.github/linters/.markdown-lint.yml',
       '.github/linters/.yaml-lint.yml',
